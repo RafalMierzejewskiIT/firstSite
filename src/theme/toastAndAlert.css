@@ -1,0 +1,8 @@
+ion-toast.custom-toast {
+  --background: #ffffff;
+  --color: #2966f4;
+}
+ion-alert.custom-alert {
+  --background: #ffffff;
+  --ion-color-step-550: #2966f4;
+}
