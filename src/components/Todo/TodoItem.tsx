@@ -13,6 +13,7 @@ type Props = {
 const TodoItem: React.FC<Props> = ({ text, id }) => {
   const [userInput, setUserInput] = useState<string>(text);
   const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+
   const userState: any = useRecoilValue(userStateAtom);
   const userId = userState.user.id;
 
@@ -26,13 +27,13 @@ const TodoItem: React.FC<Props> = ({ text, id }) => {
   };
 
   const todoEdit = async (todoId: number) => {
+    // eslint-disable-next-line
     const { data, error } = await supabase
       .from('todoItems')
       .update({ description: userInput })
       .eq('user_id', userId)
       .eq('id', todoId);
     setIsReadOnly(true);
-    window.location.reload();
   };
 
   return (

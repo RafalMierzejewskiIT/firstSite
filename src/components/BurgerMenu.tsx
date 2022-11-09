@@ -8,14 +8,13 @@ import {
   IonTitle,
   IonToast,
   IonToolbar,
+  useIonRouter,
 } from '@ionic/react';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import userStateAtom from '../atoms/usersState.atom';
 import { supabase } from '../Supabase';
-import '../theme/loadingSpinner.css';
-import '../theme/toastAndAlert.css';
+import '../theme/variables.css';
 
 interface BurgerMenuInterface {
   isDisabled: boolean;
@@ -27,35 +26,36 @@ const BurgerMenu: React.FC<BurgerMenuInterface> = ({ isDisabled }) => {
 
   const userState = useRecoilValue(userStateAtom);
   const resetAtom = useResetRecoilState(userStateAtom);
-  const history = useHistory();
+
+  const router = useIonRouter();
 
   const signOut = async () => {
-    console.log('out');
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-      resetAtom();
       setCurrentToast('You have been logged out.');
     } catch (error: any) {
       setCurrentError(error);
-    } finally {
-      // window.location.reload();
     }
   };
 
-  const delayedToastForwarding = () => {
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const delayedToastForwarding = async () => {
+    router.push('login');
     setCurrentToast('');
-    history.push('home');
+    await delay(5);
+    resetAtom();
   };
 
   return (
     <IonMenu disabled={isDisabled} contentId='main-content'>
       <IonToast
         isOpen={Boolean(currentToast)}
-        duration={1500}
+        duration={1000}
         message={currentToast}
         position='middle'
-        onDidDismiss={delayedToastForwarding}
+        onDidDismiss={() => delayedToastForwarding()}
         cssClass='custom-toast'
       />
       <IonAlert

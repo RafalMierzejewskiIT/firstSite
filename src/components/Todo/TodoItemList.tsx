@@ -13,6 +13,7 @@ const TodoItemList: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      // eslint-disable-next-line
       const { data, error } = await supabase.from('todoItems').select('*').eq('user_id', userId);
       return setUserTodos(data as TodoItemType[]);
     };
@@ -22,7 +23,7 @@ const TodoItemList: React.FC = () => {
   return (
     <div>
       <TodoItemCreator />
-      <div className='flex flex-col justify-center max-w-4xl mx-auto'>
+      <div className='flex flex-col w-[90%] justify-center max-w-4xl mx-auto'>
         {userTodos
           .sort((a: TodoItemType, b: TodoItemType) => a.id - b.id)
           .map((todo: TodoItemType) => (

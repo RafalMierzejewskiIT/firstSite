@@ -10,7 +10,7 @@ const TodoItemCreator = () => {
   const userState: any = useRecoilValue(userStateAtom);
   const userId = userState.user.id;
 
-  const addToTable = async () => {
+  const addToDB = async () => {
     const { data, error } = await supabase
       .from('todoItems')
       .insert([{ description: userInput, user_id: userId }]);
@@ -18,8 +18,7 @@ const TodoItemCreator = () => {
   };
 
   return (
-    // <div className='max-w-4xl mx-auto my-8 border border-white rounded-lg'>
-    <div className='mx-auto border-2 p-1 border-white max-w-4xl rounded-lg m-5 '>
+    <div className='mx-auto w-[90%] border-2 border-double p-1 border-white max-w-4xl rounded-md  m-5 '>
       <IonItem lines='none'>
         <IonInput
           type='text'
@@ -27,11 +26,11 @@ const TodoItemCreator = () => {
           placeholder='Type your new ToDo here'
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              addToTable();
+              addToDB();
             }
           }}
         />
-        <IonButton onClick={addToTable} size='small'>
+        <IonButton onClick={addToDB} size='small'>
           <IonIcon icon={add} />
         </IonButton>
       </IonItem>

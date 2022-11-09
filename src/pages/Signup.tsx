@@ -12,12 +12,11 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { supabase } from '../Supabase';
 import logo from '../assets/logo.jpg';
-import '../theme/loadingSpinner.css';
-import '../theme/toastAndAlert.css';
+import '../theme/variables.css';
 
 const Signup = () => {
   const [emailValue, setEmailValue] = useState<string>('');
-  const [passwordValue, setPasswordValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState<string>('');
   const [currentToast, setCurrentToast] = useState<any>('');
   const [currentError, setCurrentError] = useState<any>('');
 

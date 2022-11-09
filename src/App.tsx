@@ -1,10 +1,13 @@
 import {
   IonApp,
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonMenuButton,
   IonPage,
+  IonRouterLink,
   IonRouterOutlet,
   IonTitle,
   IonToolbar,
@@ -12,7 +15,7 @@ import {
 } from '@ionic/react';
 
 import { IonReactRouter } from '@ionic/react-router';
-import {} from 'ionicons/icons';
+import { logoGithub } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -32,7 +35,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import TodoItemList from './components/Todo/TodoItemList';
 import Home from './pages/Home';
 import { Route } from 'react-router';
 import Login from './pages/Login';
@@ -40,40 +42,47 @@ import Signup from './pages/Signup';
 import { useRecoilValue } from 'recoil';
 import userStateAtom from './atoms/usersState.atom';
 import BurgerMenu from './components/BurgerMenu';
+import NotLoggedIn from './pages/NotLoggedIn';
 
 setupIonicReact();
 
 const App: React.FC = () => {
   const userState: any = useRecoilValue(userStateAtom);
+
   return (
     <IonApp>
-      <BurgerMenu isDisabled={userState ? false : true} />
-      <IonPage id='main-content'>
-        <IonHeader>
-          <IonToolbar color='primary'>
-            <IonButtons slot='start'>
-              <IonMenuButton />
-            </IonButtons>
+      <IonReactRouter>
+        <BurgerMenu isDisabled={userState ? false : true} />
+        <IonPage id='main-content'>
+          <IonHeader>
             <IonToolbar color='primary'>
-              <IonTitle className='text-center mr-5'>
-                {userState ? userState.user.email : 'Not logged in'}
-              </IonTitle>
+              <IonButtons slot='start'>
+                <IonMenuButton />
+              </IonButtons>
+              <IonToolbar color='primary'>
+                <IonTitle className='text-center mr-5'>
+                  {userState ? userState.user.email : 'Not logged in'}
+                </IonTitle>
+                <IonButtons slot='primary'>
+                  <IonButton>
+                    <IonRouterLink href='https://github.com/RafalMierzejewskiIT/' color='secondary'>
+                      <IonIcon icon={logoGithub} className='text-4xl' />
+                    </IonRouterLink>
+                  </IonButton>
+                </IonButtons>
+              </IonToolbar>
             </IonToolbar>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          <IonReactRouter>
+          </IonHeader>
+          <IonContent>
             <IonRouterOutlet>
-              <Route exact path='/' children={<Home />} />
-              <Route exact path='/home'>
-                {!userState === true ? <Home /> : <TodoItemList />}
-              </Route>
+              <Route exact path='/' children={<NotLoggedIn />} />
+              <Route exact path='/home' children={<Home />} />
               <Route exact path='/login' children={<Login />} />
               <Route exact path='/signup' children={<Signup />} />
             </IonRouterOutlet>
-          </IonReactRouter>
-        </IonContent>
-      </IonPage>
+          </IonContent>
+        </IonPage>
+      </IonReactRouter>
     </IonApp>
   );
 };

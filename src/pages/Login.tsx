@@ -6,27 +6,26 @@ import {
   IonItem,
   IonRouterLink,
   IonToast,
+  useIonRouter,
 } from '@ionic/react';
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { supabase } from '../Supabase';
 import userStateAtom from '../atoms/usersState.atom';
 import logo from '../assets/logo.jpg';
 import { useIonLoading } from '@ionic/react';
-import '../theme/loadingSpinner.css';
-import '../theme/toastAndAlert.css';
+import '../theme/variables.css';
 
-const Login = () => {
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
+const Login: React.FC = () => {
+  const [emailValue, setEmailValue] = useState<string>('');
+  const [passwordValue, setPasswordValue] = useState<string>('');
   const [currentToast, setCurrentToast] = useState<any>('');
   const [currentError, setCurrentError] = useState<any>('');
 
   const setUserState: any = useSetRecoilState(userStateAtom);
 
   const [present, dismiss] = useIonLoading();
-  const history = useHistory();
+  const router = useIonRouter();
 
   const signInWithPassword = async () => {
     present({
@@ -49,7 +48,7 @@ const Login = () => {
 
   const delayedToastForwarding = () => {
     setCurrentToast('');
-    history.push('home');
+    router.push('home');
   };
 
   return (
