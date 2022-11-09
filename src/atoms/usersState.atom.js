@@ -2,6 +2,7 @@ const { atom } = require('recoil');
 
 const localStorageEffect =
   (key) =>
+  // eslint-disable-next-line
   ({ setSelf, onSet }) => {
     const savedValue = localStorage.getItem(key);
     if (savedValue != null) {

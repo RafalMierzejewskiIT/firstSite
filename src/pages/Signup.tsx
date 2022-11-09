@@ -16,10 +16,10 @@ import '../theme/loadingSpinner.css';
 import '../theme/toastAndAlert.css';
 
 const Signup = () => {
-  const [emailValue, setEmailValue] = useState('');
+  const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState('');
-  const [currentToast, setCurrentToast] = useState('');
-  const [currentError, setCurrentError] = useState('');
+  const [currentToast, setCurrentToast] = useState<any>('');
+  const [currentError, setCurrentError] = useState<any>('');
 
   const [present, dismiss] = useIonLoading();
   const history = useHistory();
@@ -64,25 +64,33 @@ const Signup = () => {
         message={currentError.message}
         cssClass='custom-alert'
       />
-      <div className='flex justify-center  w-screen'>
+      <div className='flex justify-center'>
         <img src={logo} alt='logo' />
       </div>
-      <IonItem>
-        <IonInput
-          placeholder='Email'
-          value={emailValue}
-          onIonChange={(e) => setEmailValue(e.target.value)}
-        />
-      </IonItem>
-      <IonItem>
-        <IonInput
-          type='password'
-          placeholder='Password'
-          value={passwordValue}
-          onIonChange={(e) => setPasswordValue(e.target.value)}
-        />
-      </IonItem>
-      <div className='flex flex-col w-5/6 mx-auto my-6 space-y-3'>
+      <div className='max-w-lg items-center mx-auto'>
+        <IonItem>
+          <IonInput
+            placeholder='Email'
+            value={emailValue}
+            onIonChange={(e: any) => setEmailValue(e.target.value)}
+            autofocus={true}
+          />
+        </IonItem>
+        <IonItem>
+          <IonInput
+            type='password'
+            placeholder='Password'
+            value={passwordValue}
+            onIonChange={(e: any) => setPasswordValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                signUp();
+              }
+            }}
+          />
+        </IonItem>
+      </div>
+      <div className='flex flex-col max-w-md w-[90%] mx-auto my-6'>
         <IonButton onClick={signUp}>Sign up</IonButton>
       </div>
       <div className='text-center my-9'>

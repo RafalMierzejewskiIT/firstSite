@@ -4,10 +4,10 @@ import logo from '../assets/logo.jpg';
 const Home: React.FC = () => {
   return (
     <IonGrid>
-      <div className='flex justify-center w-screen'>
+      <div className='flex justify-center'>
         <img src={logo} alt='logo' />
       </div>
-      <div className='flex flex-col w-5/6 mx-auto my-6 space-y-3'>
+      <div className='flex flex-col max-w-lg w-[90%] mx-auto my-6 space-y-3'>
         <IonButton href='/login'>
           <IonLabel>Sign In</IonLabel>
         </IonButton>

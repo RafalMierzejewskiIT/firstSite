@@ -47,7 +47,7 @@ const App: React.FC = () => {
   const userState: any = useRecoilValue(userStateAtom);
   return (
     <IonApp>
-      <BurgerMenu />
+      <BurgerMenu isDisabled={userState ? false : true} />
       <IonPage id='main-content'>
         <IonHeader>
           <IonToolbar color='primary'>
@@ -55,7 +55,9 @@ const App: React.FC = () => {
               <IonMenuButton />
             </IonButtons>
             <IonToolbar color='primary'>
-              <IonTitle>{userState ? userState.user.email : 'Not logged in'}</IonTitle>
+              <IonTitle className='text-center mr-5'>
+                {userState ? userState.user.email : 'Not logged in'}
+              </IonTitle>
             </IonToolbar>
           </IonToolbar>
         </IonHeader>

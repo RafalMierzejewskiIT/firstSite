@@ -20,10 +20,10 @@ import '../theme/toastAndAlert.css';
 const Login = () => {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
-  const [currentToast, setCurrentToast] = useState('');
-  const [currentError, setCurrentError] = useState('');
+  const [currentToast, setCurrentToast] = useState<any>('');
+  const [currentError, setCurrentError] = useState<any>('');
 
-  const setUserState = useSetRecoilState(userStateAtom);
+  const setUserState: any = useSetRecoilState(userStateAtom);
 
   const [present, dismiss] = useIonLoading();
   const history = useHistory();
@@ -40,7 +40,7 @@ const Login = () => {
       if (error) throw error;
       setUserState(data);
       setCurrentToast('Successfully logged in as ' + emailValue + '.');
-    } catch (error) {
+    } catch (error: any) {
       setCurrentError(error);
     } finally {
       dismiss();
@@ -68,25 +68,33 @@ const Login = () => {
         message={currentError.message}
         cssClass='custom-alert'
       />
-      <div className='flex justify-center w-screen'>
+      <div className='flex justify-center'>
         <img src={logo} alt='logo' />
       </div>
-      <IonItem>
-        <IonInput
-          placeholder='Email'
-          value={emailValue}
-          onIonChange={(e) => setEmailValue(e.target.value)}
-        />
-      </IonItem>
-      <IonItem>
-        <IonInput
-          type='password'
-          placeholder='Password'
-          value={passwordValue}
-          onIonChange={(e) => setPasswordValue(e.target.value)}
-        />
-      </IonItem>
-      <div className='flex flex-col w-5/6 mx-auto my-6 space-y-3'>
+      <div className='max-w-lg items-center mx-auto'>
+        <IonItem>
+          <IonInput
+            placeholder='Email'
+            value={emailValue}
+            onIonChange={(e: any) => setEmailValue(e.target.value)}
+            autofocus={true}
+          />
+        </IonItem>
+        <IonItem>
+          <IonInput
+            type='password'
+            placeholder='Password'
+            value={passwordValue}
+            onIonChange={(e: any) => setPasswordValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                signInWithPassword();
+              }
+            }}
+          />
+        </IonItem>
+      </div>
+      <div className='flex flex-col max-w-md w-[90%] mx-auto my-6'>
         <IonButton onClick={signInWithPassword}>Login</IonButton>
       </div>
       <div className='text-center my-9'>

@@ -17,9 +17,13 @@ import { supabase } from '../Supabase';
 import '../theme/loadingSpinner.css';
 import '../theme/toastAndAlert.css';
 
-const BurgerMenu = () => {
-  const [currentToast, setCurrentToast] = useState('');
-  const [currentError, setCurrentError] = useState('');
+interface BurgerMenuInterface {
+  isDisabled: boolean;
+}
+
+const BurgerMenu: React.FC<BurgerMenuInterface> = ({ isDisabled }) => {
+  const [currentToast, setCurrentToast] = useState<string>('');
+  const [currentError, setCurrentError] = useState<any>('');
 
   const userState = useRecoilValue(userStateAtom);
   const resetAtom = useResetRecoilState(userStateAtom);
@@ -32,8 +36,10 @@ const BurgerMenu = () => {
       if (error) throw error;
       resetAtom();
       setCurrentToast('You have been logged out.');
-    } catch (error) {
+    } catch (error: any) {
       setCurrentError(error);
+    } finally {
+      // window.location.reload();
     }
   };
 
@@ -43,7 +49,7 @@ const BurgerMenu = () => {
   };
 
   return (
-    <IonMenu contentId='main-content'>
+    <IonMenu disabled={isDisabled} contentId='main-content'>
       <IonToast
         isOpen={Boolean(currentToast)}
         duration={1500}
