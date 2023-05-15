@@ -1,7 +1,7 @@
 {
-  "name": "samemu",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
+	"name": "personklik",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "react"
 }
