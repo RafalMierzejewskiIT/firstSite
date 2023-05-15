@@ -1,5 +1,9 @@
-import TodoItemList from '../components/Todo/TodoItemList';
+import {useRecoilValue} from 'recoil';
+import userStateAtom from '../atoms/usersState.atom';
 
-const Home: React.FC = () => <TodoItemList />;
+const Home: React.FC = () => {
+	const user = useRecoilValue(userStateAtom);
+	return <div className='text-center'>Welcome</div>;
+};
 
 export default Home;
